@@ -27,8 +27,8 @@ app.use('/api',function(req,res){
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -42,9 +42,13 @@ app.use(function(req, res, next) {
   
   next();
 });
-// app.get('*', function (req, res) {
-//   res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-// })
+app.get('*', function (req, res) {
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+})
+// app.set('views', path.join(__dirname, 'views'));
+// app.engine('html', require('ejs').renderFile);
+// app.set('view engine','ejs')
+
 var mysql = require('mysql')
 var connection = mysql.createConnection({
   host: 'localhost',
