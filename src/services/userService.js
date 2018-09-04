@@ -7,7 +7,7 @@ export const userService = {
 
 function login(username, password) {
 
-    return fetch('http://localhost:3001/api/authenticate?',  {
+    return fetch('/api/authenticate?',  {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ "username":username, "password":password })
