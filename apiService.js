@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.listen(3001,function(err){
+app.listen(3000,function(err){
     if(err){
         return console.log(err);
     }

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www & node apiService.js"
+    "start": "node ./bin/www"
   },
   "devDependencies": {
     "css-loader": "^1.0.0",

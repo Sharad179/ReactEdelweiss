@@ -18,7 +18,7 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 const apiProxy = httpProxy.createProxyServer({
-  target:'http://localhost:8081'
+  target:'http://localhost:8000'
 })
 
 app.use('/api',function(req,res){
@@ -87,11 +87,11 @@ app.all('/leadinfo', upload.array(), function (req, res, next) {
 });
 
 
-app.listen(8081,function(err){
+app.listen(8000,function(err){
   if(err){
       return console.log(err);
   }
-  console.log('API Server is listening to http://localhost:8081');
+  console.log('API Server is listening to http://localhost:8000');
 })
 
 // catch 404 and forward to error handler

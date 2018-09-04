@@ -7846,7 +7846,7 @@ Object.keys(_user).forEach(function (key) {
 /* 117 */
 /***/ (function(module, exports) {
 
-module.exports = {"apiUrl":"http://localhost:3001"};
+module.exports = {"apiUrl":"http://localhost:8000"};
 
 /***/ }),
 /* 118 */
