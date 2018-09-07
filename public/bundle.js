@@ -35477,6 +35477,12 @@ function login(username, password) {
         if (user.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
+        } else {
+            if (user.status == "Inactive") {
+                alert("User is inactive");
+            } else {
+                alert("Invalid Username or Password");
+            }
         }
 
         return user;
@@ -35554,7 +35560,6 @@ var HomePage = function (_React$Component) {
         value: function formatTime(Date) {
             var newdate = void 0;
             var newtime = void 0;
-            console.log(Date.getHours());
             if (Date.getHours() > 9) {
                 newdate = Date.getHours();
             } else {
@@ -35644,10 +35649,14 @@ var HomePage = function (_React$Component) {
     }, {
         key: 'handleSubmit',
         value: function handleSubmit(event) {
-            console.log(this.state);
 
             event.preventDefault();
             var customer = this.state;
+            var _props = this.props,
+                user = _props.user,
+                users = _props.users;
+
+            customer["created_by"] = user.username;
             if (this.handleMobileValidation(customer.mobileNumber) && this.handleEmailValidation(customer.emailId) && this.handleNumericValidation(customer.netSalary) && this.handleTextValidation(customer)) {
                 fetch('/api/leadinfo?', {
                     method: 'POST',
@@ -35668,9 +35677,9 @@ var HomePage = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _props = this.props,
-                user = _props.user,
-                users = _props.users;
+            var _props2 = this.props,
+                user = _props2.user,
+                users = _props2.users;
 
             return _react2.default.createElement(
                 'div',
@@ -36087,11 +36096,13 @@ var HomePage = function (_React$Component) {
 }(_react2.default.Component);
 
 function mapStateToProps(state) {
-    // const { users, authentication } = state;
-    // const { user } = authentication;
+    var users = state.users,
+        authentication = state.authentication;
+    var user = authentication.user;
+
     return {
-        // user,
-        // users
+        user: user,
+        users: users
     };
 }
 
@@ -47150,6 +47161,16 @@ var TopNav = function (_React$Component) {
                                 { className: 'nav-item' },
                                 _react2.default.createElement(
                                     'a',
+                                    { className: 'nav-link', href: '' },
+                                    'Hi ',
+                                    user.username
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                { className: 'nav-item' },
+                                _react2.default.createElement(
+                                    'a',
                                     { className: 'nav-link', href: '/login' },
                                     'Logout'
                                 )
@@ -47165,7 +47186,14 @@ var TopNav = function (_React$Component) {
 }(_react2.default.Component);
 
 function mapStateToProps(state) {
-    return {};
+    var users = state.users,
+        authentication = state.authentication;
+    var user = authentication.user;
+
+    return {
+        user: user,
+        users: users
+    };
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(TopNav);

@@ -59,23 +59,39 @@ var connection = mysql.createConnection({
 });
 
 app.all('/authenticate', upload.array(), function (req, res, next) {
-  console.log(req.body.username);
-  if (req.body.username == "sharad") {
-    res.json({
-      "username": req.body.username,
-      "token": 'fake-token'
-    })
-  }
-  else {
-    res.json({
-      "username": req.body.username,
-      "token": ''
-    })
-  }
+  var querystring = "SELECT * FROM USERLIST WHERE USERNAME = '" + req.body.username + "' AND PASSWORD = '" + req.body.password + "'";
+  connection.query(querystring, function (err, result) {
+    if (err) {
+      throw err
+    }
+    else {
+      if (result[0]) {
+        if (result[0].TOKEN) {
+          res.json({
+            "status": "Active",
+            "username": result[0].USERNAME,
+            "token": result[0].TOKEN
+          })
+        }
+        else {
+          res.json({
+            "status": "Inactive",
+            "username": result[0].USERNAME,
+            "token": result[0].TOKEN
+          })
+        }
+      }
+      else {
+        res.json({
+          "status": "User Does not Exist",
+        })
+      }
+    }
+  })
 })
 app.all('/leadinfo', upload.array(), function (req, res, next) {
 
-  var querystring = "INSERT INTO Edelweissdata (AGGREGATOR_NAME,CONTACT_PERSON,COMPANY_NAME,CITY,MOBILE_NUMBER,EMAIL,CURRENT_COMPANY_EXPERIENCE,NET_SALARY,MODE_OF_SALARY,OTHER_LOAN,OFFICE_ADDRESS,APPOINTMENT_DATE,APPOINTMENT_TIME) VALUES ('" + req.body.aggregator + "','" + req.body.contactPerson + "','" + req.body.companyName + "','" + req.body.city + "','" + req.body.mobileNumber + "','" + req.body.emailId + "','" + req.body.companyExp + "','" + req.body.netSalary + "','" + req.body.salaryMode + "','" + req.body.otherLoan + "','" + req.body.officeAddress1 + " " + req.body.officeAddress2 + "','" + req.body.appointmentDate + "','" + req.body.appointmentTime + "')";
+  var querystring = "INSERT INTO Edelweissdata (AGGREGATOR_NAME,CONTACT_PERSON,COMPANY_NAME,CITY,MOBILE_NUMBER,EMAIL,CURRENT_COMPANY_EXPERIENCE,NET_SALARY,MODE_OF_SALARY,OTHER_LOAN,OFFICE_ADDRESS,APPOINTMENT_DATE,APPOINTMENT_TIME,CREATED_BY) VALUES ('" + req.body.aggregator + "','" + req.body.contactPerson + "','" + req.body.companyName + "','" + req.body.city + "','" + req.body.mobileNumber + "','" + req.body.emailId + "','" + req.body.companyExp + "','" + req.body.netSalary + "','" + req.body.salaryMode + "','" + req.body.otherLoan + "','" + req.body.officeAddress1 + " " + req.body.officeAddress2 + "','" + req.body.appointmentDate + "','" + req.body.appointmentTime + "','"+req.body.created_by+"')";
   connection.query(querystring, function (err, result) {
     if (err) {
       res.json({ "result": "failure" });

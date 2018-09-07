@@ -22,7 +22,6 @@ class HomePage extends React.Component {
     formatTime(Date) {
         let newdate
         let newtime
-        console.log(Date.getHours());
         if (Date.getHours() > 9) {
             newdate = Date.getHours();
         }
@@ -109,10 +108,11 @@ class HomePage extends React.Component {
 
     }
     handleSubmit(event) {
-        console.log(this.state);
 
         event.preventDefault();
         const customer = this.state;
+        const { user, users } = this.props;
+        customer["created_by"] = user.username;
         if (this.handleMobileValidation(customer.mobileNumber) && this.handleEmailValidation(customer.emailId) && this.handleNumericValidation(customer.netSalary) && this.handleTextValidation(customer)) {
             fetch('/api/leadinfo?', {
                 method: 'POST',
@@ -316,11 +316,11 @@ class HomePage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    // const { users, authentication } = state;
-    // const { user } = authentication;
+    const { users, authentication } = state;
+    const { user } = authentication;
     return {
-        // user,
-        // users
+        user,
+        users
     };
 }
 
