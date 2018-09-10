@@ -10,7 +10,7 @@ import { Form, Row, Col, FormControl, FormGroup, ControlLabel, InputGroup, Dropd
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 'salaryMode': 'Bank Credit',"otherLoan":"yes", "appointmentDate": this.formatDate(new Date()), 'appointmentTime': this.formatTime(new Date()) }
+        this.state = { 'salaryMode': 'Bank Credit', "otherLoan": "Yes", "appointmentDate": this.formatDate(new Date()), 'appointmentTime': this.formatTime(new Date()),'officeAddress1':"",'officeAddress2':""}
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -48,8 +48,8 @@ class HomePage extends React.Component {
         return [year, month, day].join('-');
     }
     handleTextValidation(customerObj) {
-        var Textregex = /^[a-zA-Z]+$/;
-        if ((customerObj.aggregator.match(Textregex)) && (customerObj.contactPerson.match(Textregex)) && (customerObj.companyName.match(Textregex)) && (customerObj.city.match(Textregex))) {
+        var Textregex = /^[a-zA-Z. ]*$/;
+        if ((customerObj.aggregator.match(Textregex)) && (customerObj.officeState.match(Textregex)) && (customerObj.officeCountry.match(Textregex)) && (customerObj.contactPerson.match(Textregex)) && (customerObj.companyName.match(Textregex)) && (customerObj.city.match(Textregex))) {
             return true;
         }
         else {
@@ -100,6 +100,17 @@ class HomePage extends React.Component {
         }
 
     }
+    handleLoanAmountValidation(inputtxt) {
+        var loanamount = /^\d{1,15}$/;
+        if ((inputtxt.match(loanamount))) {
+            return true;
+        }
+        else {
+
+            return false;
+        }
+
+    }
     handleChange(event) {
         const name = event.target.name;
         this.setState({
@@ -113,7 +124,7 @@ class HomePage extends React.Component {
         const customer = this.state;
         const { user, users } = this.props;
         customer["created_by"] = user.username;
-        if (this.handleMobileValidation(customer.mobileNumber) && this.handleEmailValidation(customer.emailId) && this.handleNumericValidation(customer.netSalary) && this.handleTextValidation(customer)) {
+        if (this.handleMobileValidation(customer.mobileNumber) && this.handleEmailValidation(customer.emailId) && this.handleNumericValidation(customer.netSalary) && this.handleLoanAmountValidation(customer.loanAmount) && this.handleNumericValidation(customer.officePincode) && this.handleTextValidation(customer)) {
             fetch('/api/leadinfo?', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -178,11 +189,11 @@ class HomePage extends React.Component {
                                 </Col>
 
                                 <Col md={6}>
-                                    <FormGroup controlId="formHorizontalCity">
+                                    <FormGroup controlId="formHorizontalLoanAmount">
                                         <Col componentClass={ControlLabel} sm={12}>
-                                            <b style={{ fontWeight: 600, color: "white" }}>City</b></Col>
+                                            <b style={{ fontWeight: 600, color: "white" }}>Loan Amount</b></Col>
                                         <Col sm={12}>
-                                            <FormControl type="text" name="city" onChange={this.handleChange} pattern="[a-zA-Z. ]{1,50}" required />
+                                            <FormControl type="text" name="loanAmount" onChange={this.handleChange} pattern="\d{1,15}" required />
                                         </Col>
                                     </FormGroup>
                                 </Col>
@@ -246,10 +257,10 @@ class HomePage extends React.Component {
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}> Other Loan</b></Col>
                                     <Col sm={12}>
-                                    <select value={this.state.otherLoan} className="col-sm-12 form-control" title="Other Loan" name="otherLoan" onChange={this.handleChange} required>
-                                            <option value="yes">Yes</option>
+                                        <select value={this.state.otherLoan} className="col-sm-12 form-control" title="Other Loan" name="otherLoan" onChange={this.handleChange} required>
+                                            <option value="Yes">Yes</option>
                                             <option value="No">No</option>
-                
+
 
 
                                         </select>
@@ -271,6 +282,38 @@ class HomePage extends React.Component {
                                         <b style={{ fontWeight: 600, color: "white" }}>Office Address Line 2</b></Col>
                                     <Col sm={12}>
                                         <FormControl type="text" name="officeAddress2" onChange={this.handleChange} />
+                                    </Col>
+                                </FormGroup></Col>
+                            </Row>
+                            <Row>
+                                <Col sm={6}> <FormGroup controlId="formHorizontalCity">
+                                    <Col componentClass={ControlLabel} sm={12}>
+                                        <b style={{ fontWeight: 600, color: "white" }}>City</b></Col>
+                                    <Col sm={12}>
+                                        <FormControl type="text" name="city" onChange={this.handleChange} pattern="[a-zA-Z. ]{1,50}" required />
+                                    </Col>
+                                </FormGroup></Col>
+                                <Col sm={6}>  <FormGroup controlId="formHorizontalState">
+                                    <Col componentClass={ControlLabel} sm={12}>
+                                        <b style={{ fontWeight: 600, color: "white" }}>State</b></Col>
+                                    <Col sm={12}>
+                                        <FormControl type="text" name="officeState" onChange={this.handleChange} pattern="[a-zA-Z. ]{1,50}" required />
+                                    </Col>
+                                </FormGroup></Col>
+                            </Row>
+                            <Row>
+                                <Col sm={6}> <FormGroup controlId="formHorizontalPincode">
+                                    <Col componentClass={ControlLabel} sm={12}>
+                                        <b style={{ fontWeight: 600, color: "white" }}>Pincode</b></Col>
+                                    <Col sm={12}>
+                                        <FormControl type="text" name="officePincode" onChange={this.handleChange} pattern="[0-9]{6}" required />
+                                    </Col>
+                                </FormGroup></Col>
+                                <Col sm={6}>  <FormGroup controlId="formHorizontalCountry">
+                                    <Col componentClass={ControlLabel} sm={12}>
+                                        <b style={{ fontWeight: 600, color: "white" }}>Country</b></Col>
+                                    <Col sm={12}>
+                                        <FormControl type="text" name="officeCountry" onChange={this.handleChange} pattern="[a-zA-Z. ]{1,50}" required />
                                     </Col>
                                 </FormGroup></Col>
                             </Row>
@@ -310,7 +353,7 @@ class HomePage extends React.Component {
                 </div>
             </div>
 
-           
+
         );
     }
 }

@@ -35543,7 +35543,7 @@ var HomePage = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (HomePage.__proto__ || Object.getPrototypeOf(HomePage)).call(this, props));
 
-        _this.state = { 'salaryMode': 'Bank Credit', "otherLoan": "yes", "appointmentDate": _this.formatDate(new Date()), 'appointmentTime': _this.formatTime(new Date()) };
+        _this.state = { 'salaryMode': 'Bank Credit', "otherLoan": "Yes", "appointmentDate": _this.formatDate(new Date()), 'appointmentTime': _this.formatTime(new Date()), 'officeAddress1': "", 'officeAddress2': "" };
         _this.handleChange = _this.handleChange.bind(_this);
         _this.handleSubmit = _this.handleSubmit.bind(_this);
         return _this;
@@ -35588,8 +35588,8 @@ var HomePage = function (_React$Component) {
     }, {
         key: 'handleTextValidation',
         value: function handleTextValidation(customerObj) {
-            var Textregex = /^[a-zA-Z]+$/;
-            if (customerObj.aggregator.match(Textregex) && customerObj.contactPerson.match(Textregex) && customerObj.companyName.match(Textregex) && customerObj.city.match(Textregex)) {
+            var Textregex = /^[a-zA-Z. ]*$/;
+            if (customerObj.aggregator.match(Textregex) && customerObj.officeState.match(Textregex) && customerObj.officeCountry.match(Textregex) && customerObj.contactPerson.match(Textregex) && customerObj.companyName.match(Textregex) && customerObj.city.match(Textregex)) {
                 return true;
             } else {
 
@@ -35641,6 +35641,17 @@ var HomePage = function (_React$Component) {
             }
         }
     }, {
+        key: 'handleLoanAmountValidation',
+        value: function handleLoanAmountValidation(inputtxt) {
+            var loanamount = /^\d{1,15}$/;
+            if (inputtxt.match(loanamount)) {
+                return true;
+            } else {
+
+                return false;
+            }
+        }
+    }, {
         key: 'handleChange',
         value: function handleChange(event) {
             var name = event.target.name;
@@ -35657,7 +35668,7 @@ var HomePage = function (_React$Component) {
                 users = _props.users;
 
             customer["created_by"] = user.username;
-            if (this.handleMobileValidation(customer.mobileNumber) && this.handleEmailValidation(customer.emailId) && this.handleNumericValidation(customer.netSalary) && this.handleTextValidation(customer)) {
+            if (this.handleMobileValidation(customer.mobileNumber) && this.handleEmailValidation(customer.emailId) && this.handleNumericValidation(customer.netSalary) && this.handleLoanAmountValidation(customer.loanAmount) && this.handleNumericValidation(customer.officePincode) && this.handleTextValidation(customer)) {
                 fetch('/api/leadinfo?', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -35782,20 +35793,20 @@ var HomePage = function (_React$Component) {
                                     { md: 6 },
                                     _react2.default.createElement(
                                         _reactBootstrap.FormGroup,
-                                        { controlId: 'formHorizontalCity' },
+                                        { controlId: 'formHorizontalLoanAmount' },
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { componentClass: _reactBootstrap.ControlLabel, sm: 12 },
                                             _react2.default.createElement(
                                                 'b',
                                                 { style: { fontWeight: 600, color: "white" } },
-                                                'City'
+                                                'Loan Amount'
                                             )
                                         ),
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'city', onChange: this.handleChange, pattern: '[a-zA-Z. ]{1,50}', required: true })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'loanAmount', onChange: this.handleChange, pattern: '\\d{1,15}', required: true })
                                         )
                                     )
                                 )
@@ -35965,7 +35976,7 @@ var HomePage = function (_React$Component) {
                                                 { value: this.state.otherLoan, className: 'col-sm-12 form-control', title: 'Other Loan', name: 'otherLoan', onChange: this.handleChange, required: true },
                                                 _react2.default.createElement(
                                                     'option',
-                                                    { value: 'yes' },
+                                                    { value: 'Yes' },
                                                     'Yes'
                                                 ),
                                                 _react2.default.createElement(
@@ -36024,6 +36035,106 @@ var HomePage = function (_React$Component) {
                                             _reactBootstrap.Col,
                                             { sm: 12 },
                                             _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'officeAddress2', onChange: this.handleChange })
+                                        )
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                _reactBootstrap.Row,
+                                null,
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 6 },
+                                    ' ',
+                                    _react2.default.createElement(
+                                        _reactBootstrap.FormGroup,
+                                        { controlId: 'formHorizontalCity' },
+                                        _react2.default.createElement(
+                                            _reactBootstrap.Col,
+                                            { componentClass: _reactBootstrap.ControlLabel, sm: 12 },
+                                            _react2.default.createElement(
+                                                'b',
+                                                { style: { fontWeight: 600, color: "white" } },
+                                                'City'
+                                            )
+                                        ),
+                                        _react2.default.createElement(
+                                            _reactBootstrap.Col,
+                                            { sm: 12 },
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'city', onChange: this.handleChange, pattern: '[a-zA-Z. ]{1,50}', required: true })
+                                        )
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 6 },
+                                    '  ',
+                                    _react2.default.createElement(
+                                        _reactBootstrap.FormGroup,
+                                        { controlId: 'formHorizontalState' },
+                                        _react2.default.createElement(
+                                            _reactBootstrap.Col,
+                                            { componentClass: _reactBootstrap.ControlLabel, sm: 12 },
+                                            _react2.default.createElement(
+                                                'b',
+                                                { style: { fontWeight: 600, color: "white" } },
+                                                'State'
+                                            )
+                                        ),
+                                        _react2.default.createElement(
+                                            _reactBootstrap.Col,
+                                            { sm: 12 },
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'officeState', onChange: this.handleChange, pattern: '[a-zA-Z. ]{1,50}', required: true })
+                                        )
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                _reactBootstrap.Row,
+                                null,
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 6 },
+                                    ' ',
+                                    _react2.default.createElement(
+                                        _reactBootstrap.FormGroup,
+                                        { controlId: 'formHorizontalPincode' },
+                                        _react2.default.createElement(
+                                            _reactBootstrap.Col,
+                                            { componentClass: _reactBootstrap.ControlLabel, sm: 12 },
+                                            _react2.default.createElement(
+                                                'b',
+                                                { style: { fontWeight: 600, color: "white" } },
+                                                'Pincode'
+                                            )
+                                        ),
+                                        _react2.default.createElement(
+                                            _reactBootstrap.Col,
+                                            { sm: 12 },
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'officePincode', onChange: this.handleChange, pattern: '[0-9]{6}', required: true })
+                                        )
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    _reactBootstrap.Col,
+                                    { sm: 6 },
+                                    '  ',
+                                    _react2.default.createElement(
+                                        _reactBootstrap.FormGroup,
+                                        { controlId: 'formHorizontalCountry' },
+                                        _react2.default.createElement(
+                                            _reactBootstrap.Col,
+                                            { componentClass: _reactBootstrap.ControlLabel, sm: 12 },
+                                            _react2.default.createElement(
+                                                'b',
+                                                { style: { fontWeight: 600, color: "white" } },
+                                                'Country'
+                                            )
+                                        ),
+                                        _react2.default.createElement(
+                                            _reactBootstrap.Col,
+                                            { sm: 12 },
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'officeCountry', onChange: this.handleChange, pattern: '[a-zA-Z. ]{1,50}', required: true })
                                         )
                                     )
                                 )
