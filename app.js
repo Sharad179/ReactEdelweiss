@@ -51,11 +51,11 @@ app.get('*', function (req, res) {
 
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-  host: 'retrainfo.cl2xcsug0xte.ap-south-1.rds.amazonaws.com',
-  port: '3306',
-  user: 'retrauserdata',
-  password: 's3cr3tretra',
-  database: 'retrafinancedb'
+  host: '',
+  port: '',
+  user: '',
+  password: '',
+  database: ''
 });
 
 app.all('/authenticate', upload.array(), function (req, res, next) {
