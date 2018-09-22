@@ -51,11 +51,11 @@ app.get('*', function (req, res) {
 
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-  host: '',
-  port: '',
-  user: '',
-  password: '',
-  database: ''
+  host: 'retrainfo.cl2xcsug0xte.ap-south-1.rds.amazonaws.com',
+  port: '3306',
+  user: 'retrauserdata',
+  password: 's3cr3tretra',
+  database: 'retrafinancedb'
 });
 
 app.all('/authenticate', upload.array(), function (req, res, next) {
@@ -70,14 +70,16 @@ app.all('/authenticate', upload.array(), function (req, res, next) {
           res.json({
             "status": "Active",
             "username": result[0].USERNAME,
-            "token": result[0].TOKEN
+            "token": result[0].TOKEN,
+            "role":result[0].ROLE
           })
         }
         else {
           res.json({
             "status": "Inactive",
             "username": result[0].USERNAME,
-            "token": result[0].TOKEN
+            "token": result[0].TOKEN,
+            "role":result[0].ROLE
           })
         }
       }
@@ -91,7 +93,8 @@ app.all('/authenticate', upload.array(), function (req, res, next) {
 })
 app.all('/leadinfo', upload.array(), function (req, res, next) {
 
-  var querystring = "INSERT INTO Edelweissdata (AGGREGATOR_NAME,CONTACT_PERSON,COMPANY_NAME,CITY,MOBILE_NUMBER,EMAIL,CURRENT_COMPANY_EXPERIENCE,NET_SALARY,MODE_OF_SALARY,OTHER_LOAN,OFFICE_ADDRESS,APPOINTMENT_DATE,APPOINTMENT_TIME,CREATED_BY,LOAN_AMOUNT,STATE,PINCODE,COUNTRY) VALUES ('" + req.body.aggregator + "','" + req.body.contactPerson + "','" + req.body.companyName + "','" + req.body.city + "','" + req.body.mobileNumber + "','" + req.body.emailId + "','" + req.body.companyExp + "','" + req.body.netSalary + "','" + req.body.salaryMode + "','" + req.body.otherLoan + "','" + req.body.officeAddress1 + " " + req.body.officeAddress2 + "','" + req.body.appointmentDate + "','"  + req.body.appointmentTime + "','"+req.body.created_by+ "','"+req.body.loanAmount + "','"+ req.body.officeState + "','" + req.body.officePincode + "','" +req.body.officeCountry +"')";
+  var querystring = "INSERT INTO Edelweissdata (AGGREGATOR_NAME,CONTACT_PERSON,COMPANY_NAME,CITY,MOBILE_NUMBER,EMAIL,CURRENT_COMPANY_EXPERIENCE,NET_SALARY,MODE_OF_SALARY,OTHER_LOAN,OFFICE_ADDRESS,APPOINTMENT_DATE,APPOINTMENT_TIME,CREATED_BY,LOAN_AMOUNT,STATE,PINCODE,COUNTRY,PAN_CARD,DATE_OF_BIRTH,STATUS,COMMENTS) VALUES ('" + req.body.aggregator + "','" + req.body.contactPerson + "','" + req.body.companyName + "','" + req.body.city + "','" + req.body.mobileNumber + "','" + req.body.emailId + "','" + req.body.companyExp + "','" + req.body.netSalary + "','" + req.body.salaryMode + "','" + req.body.otherLoan + "','" + req.body.officeAddress1 + " " + req.body.officeAddress2 + "','" + req.body.appointmentDate + "','"  + req.body.appointmentTime + "','"+req.body.created_by+ "','"+req.body.loanAmount + "','"+ req.body.officeState + "','" + req.body.officePincode + "','" + req.body.officeCountry + "','" +req.body.panNumber + "','"+req.body.dateOfBirth + "','"+''+"','" +''+ "')";
+  console.log(querystring);
   connection.query(querystring, function (err, result) {
     if (err) {
       res.json({ "result": "failure" });
@@ -101,8 +104,43 @@ app.all('/leadinfo', upload.array(), function (req, res, next) {
     }
   })
 });
+app.all('/listleads', upload.array(), function (req, res, next) {
 
+  var querystring = "SELECT * FROM Edelweissdata WHERE STATUS = ''";
+  console.log(querystring)
+  connection.query(querystring, function (err, result) {
+    if (err) {
+      res.json({ "result": "failed" });
+      throw err
+    } else {
+      res.json({ "result": result });
+    }
+  })
+});
+app.all('/leaddetails', upload.array(), function (req, res, next) {
 
+  var querystring = "Select * from Edelweissdata WHERE PAN_CARD = '" + req.body.panNumber + "'";
+  connection.query(querystring, function (err, result) {
+    if (err) {
+      res.json({ "result": "failed" });
+      throw err
+    } else {
+      res.json({ "result": result });
+    }
+  })
+});
+app.all('/leadstatus', upload.array(), function (req, res, next) {
+
+  var querystring = "Update Edelweissdata SET STATUS = '" + req.body.applicationStatus + "' , COMMENTS = '"+ req.body.comments + "' WHERE PAN_CARD = '" + req.body.panNumber + "'";
+  connection.query(querystring, function (err, result) {
+    if (err) {
+      res.json({ "result": "failed" });
+      throw err
+    } else {
+      res.json({ "result": "success" , "values":result });
+    }
+  })
+});
 app.listen(8000,function(err){
   if(err){
       return console.log(err);

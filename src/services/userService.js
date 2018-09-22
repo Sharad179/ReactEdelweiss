@@ -27,7 +27,7 @@ function login(username, password) {
                     alert("Invalid Username or Password");
                 }
             }
-
+            console.log(user);
             return user;
         });
 }

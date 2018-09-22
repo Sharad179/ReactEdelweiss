@@ -16,7 +16,12 @@ function login(username, password) {
             .then(
                 user => {
                     dispatch(success(user));
-                    history.push('/home');
+                    if (user.role == 'admin') {
+                        history.push('/admin');
+                    }
+                    else {
+                        history.push('/home');
+                    }
                     window.location.href = window.location.href;
                 },
                 error => {
