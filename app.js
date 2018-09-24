@@ -21,6 +21,28 @@ const apiProxy = httpProxy.createProxyServer({
   target:'http://localhost:8000'
 })
 
+function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+
+function startTime() {
+  var today = new Date();
+  var year = today.getFullYear();
+  var month = today.getMonth();
+  var day = today.getDay();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  // add a zero in front of numbers<10
+  m = checkTime(m);
+  s = checkTime(s);
+  return(year+"-"+month+"-"+day+" "+h + ":" + m + ":" + s);
+}
+startTime();
+
 app.use('/api',function(req,res){
   apiProxy.web(req,res);
 })
@@ -51,11 +73,11 @@ app.get('*', function (req, res) {
 
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-  host: '',
-  port: '',
-  user: '',
-  password: '',
-  database: ''
+  host: 'retrainfo.cl2xcsug0xte.ap-south-1.rds.amazonaws.com',
+  port: '3306',
+  user: 'retrauserdata',
+  password: 's3cr3tretra',
+  database: 'retrafinancedb'
 });
 
 app.all('/authenticate', upload.array(), function (req, res, next) {
@@ -93,7 +115,7 @@ app.all('/authenticate', upload.array(), function (req, res, next) {
 })
 app.all('/leadinfo', upload.array(), function (req, res, next) {
 
-  var querystring = "INSERT INTO Edelweissdata (AGGREGATOR_NAME,CONTACT_PERSON,COMPANY_NAME,CITY,MOBILE_NUMBER,EMAIL,CURRENT_COMPANY_EXPERIENCE,NET_SALARY,MODE_OF_SALARY,OTHER_LOAN,OFFICE_ADDRESS,APPOINTMENT_DATE,APPOINTMENT_TIME,CREATED_BY,LOAN_AMOUNT,STATE,PINCODE,COUNTRY,PAN_CARD,DATE_OF_BIRTH,STATUS,COMMENTS) VALUES ('" + req.body.aggregator + "','" + req.body.contactPerson + "','" + req.body.companyName + "','" + req.body.city + "','" + req.body.mobileNumber + "','" + req.body.emailId + "','" + req.body.companyExp + "','" + req.body.netSalary + "','" + req.body.salaryMode + "','" + req.body.otherLoan + "','" + req.body.officeAddress1 + " " + req.body.officeAddress2 + "','" + req.body.appointmentDate + "','"  + req.body.appointmentTime + "','"+req.body.created_by+ "','"+req.body.loanAmount + "','"+ req.body.officeState + "','" + req.body.officePincode + "','" + req.body.officeCountry + "','" +req.body.panNumber + "','"+req.body.dateOfBirth + "','"+''+"','" +''+ "')";
+  var querystring = "INSERT INTO Edelweissdata (AGGREGATOR_NAME,CONTACT_PERSON,COMPANY_NAME,CITY,MOBILE_NUMBER,EMAIL,CURRENT_COMPANY_EXPERIENCE,NET_SALARY,MODE_OF_SALARY,OTHER_LOAN,OFFICE_ADDRESS,APPOINTMENT_DATE,APPOINTMENT_TIME,CREATED_BY,LOAN_AMOUNT,STATE,PINCODE,COUNTRY,PAN_CARD,DATE_OF_BIRTH,ENTRY_DATE,STATUS,COMMENTS) VALUES ('" + req.body.aggregator + "','" + req.body.contactPerson + "','" + req.body.companyName + "','" + req.body.city + "','" + req.body.mobileNumber + "','" + req.body.emailId + "','" + req.body.companyExp + "','" + req.body.netSalary + "','" + req.body.salaryMode + "','" + req.body.otherLoan + "','" + req.body.officeAddress1 + " " + req.body.officeAddress2 + "','" + req.body.appointmentDate + "','"  + req.body.appointmentTime + "','"+req.body.created_by+ "','"+req.body.loanAmount + "','"+ req.body.officeState + "','" + req.body.officePincode + "','" + req.body.officeCountry + "','" +req.body.panNumber + "','"+req.body.dateOfBirth + "','"+startTime(new Date())+ "','"+''+"','" +''+ "')";
   console.log(querystring);
   connection.query(querystring, function (err, result) {
     if (err) {
@@ -131,7 +153,7 @@ app.all('/leaddetails', upload.array(), function (req, res, next) {
 });
 app.all('/leadstatus', upload.array(), function (req, res, next) {
 
-  var querystring = "Update Edelweissdata SET STATUS = '" + req.body.applicationStatus + "' , COMMENTS = '"+ req.body.comments + "' WHERE PAN_CARD = '" + req.body.panNumber + "'";
+  var querystring = "Update Edelweissdata SET STATUS = '" + req.body.applicationStatus + "' , COMMENTS = '"+ req.body.comments +"' , ADMIN_ACTION_DATE = '"+ startTime(new Date()) +"' WHERE PAN_CARD = '" + req.body.panNumber + "'";
   connection.query(querystring, function (err, result) {
     if (err) {
       res.json({ "result": "failed" });
