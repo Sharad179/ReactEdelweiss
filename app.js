@@ -31,8 +31,8 @@ function checkTime(i) {
 function startTime() {
   var today = new Date();
   var year = today.getFullYear();
-  var month = today.getMonth();
-  var day = today.getDay();
+  var month = today.getMonth()+1;
+  var day = today.getDate();
   var h = today.getHours();
   var m = today.getMinutes();
   var s = today.getSeconds();
@@ -103,6 +103,7 @@ app.all('/authenticate', upload.array(), function (req, res, next) {
             "token": result[0].TOKEN,
             "role":result[0].ROLE
           })
+
         }
       }
       else {
@@ -115,8 +116,7 @@ app.all('/authenticate', upload.array(), function (req, res, next) {
 })
 app.all('/leadinfo', upload.array(), function (req, res, next) {
 
-  var querystring = "INSERT INTO Edelweissdata (AGGREGATOR_NAME,CONTACT_PERSON,COMPANY_NAME,CITY,MOBILE_NUMBER,EMAIL,CURRENT_COMPANY_EXPERIENCE,NET_SALARY,MODE_OF_SALARY,OTHER_LOAN,OFFICE_ADDRESS,APPOINTMENT_DATE,APPOINTMENT_TIME,CREATED_BY,LOAN_AMOUNT,STATE,PINCODE,COUNTRY,PAN_CARD,DATE_OF_BIRTH,ENTRY_DATE,STATUS,COMMENTS) VALUES ('" + req.body.aggregator + "','" + req.body.contactPerson + "','" + req.body.companyName + "','" + req.body.city + "','" + req.body.mobileNumber + "','" + req.body.emailId + "','" + req.body.companyExp + "','" + req.body.netSalary + "','" + req.body.salaryMode + "','" + req.body.otherLoan + "','" + req.body.officeAddress1 + " " + req.body.officeAddress2 + "','" + req.body.appointmentDate + "','"  + req.body.appointmentTime + "','"+req.body.created_by+ "','"+req.body.loanAmount + "','"+ req.body.officeState + "','" + req.body.officePincode + "','" + req.body.officeCountry + "','" +req.body.panNumber + "','"+req.body.dateOfBirth + "','"+startTime(new Date())+ "','"+''+"','" +''+ "')";
-  console.log(querystring);
+  var querystring = "INSERT INTO Edelweissdata (AGGREGATOR_NAME,CONTACT_PERSON,COMPANY_NAME,CITY,MOBILE_NUMBER,EMAIL,CURRENT_COMPANY_EXPERIENCE,NET_SALARY,MODE_OF_SALARY,OTHER_LOAN,OFFICE_ADDRESS,APPOINTMENT_DATE,APPOINTMENT_TIME,CREATED_BY,LOAN_AMOUNT,STATE,PINCODE,COUNTRY,PAN_CARD,DATE_OF_BIRTH,ENTRY_DATE,STATUS,COMMENTS) VALUES ('" + req.body.aggregator + "','" + req.body.contactPerson + "','" + req.body.companyName + "','" + req.body.city + "','" + req.body.mobileNumber + "','" + req.body.emailId + "','" + req.body.companyExp + "','" + req.body.netSalary + "','" + req.body.salaryMode + "','" + req.body.otherLoan + "','" + req.body.officeAddress1 + " " + req.body.officeAddress2 + "','" + req.body.appointmentDate + "','"  + req.body.appointmentTime + "','"+req.body.created_by+ "','"+req.body.loanAmount + "','"+ req.body.officeState + "','" + req.body.officePincode + "','" + req.body.officeCountry + "','" +req.body.panNumber + "','"+req.body.dateOfBirth + "','"+startTime()+ "','"+''+"','" +''+ "')";
   connection.query(querystring, function (err, result) {
     if (err) {
       res.json({ "result": "failure" });
@@ -153,7 +153,7 @@ app.all('/leaddetails', upload.array(), function (req, res, next) {
 });
 app.all('/leadstatus', upload.array(), function (req, res, next) {
 
-  var querystring = "Update Edelweissdata SET STATUS = '" + req.body.applicationStatus + "' , COMMENTS = '"+ req.body.comments +"' , ADMIN_ACTION_DATE = '"+ startTime(new Date()) +"' WHERE PAN_CARD = '" + req.body.panNumber + "'";
+  var querystring = "Update Edelweissdata SET STATUS = '" + req.body.applicationStatus + "' , COMMENTS = '"+ req.body.comments +"' , ADMIN_ACTION_DATE = '"+ startTime() +"' WHERE PAN_CARD = '" + req.body.panNumber + "'";
   connection.query(querystring, function (err, result) {
     if (err) {
       res.json({ "result": "failed" });
