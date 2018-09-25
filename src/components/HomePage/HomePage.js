@@ -10,7 +10,7 @@ import { Form, Row, Col, FormControl, FormGroup, ControlLabel, InputGroup, Dropd
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 'salaryMode': 'Bank Credit', "otherLoan": "Yes", "appointmentDate": this.formatDate(new Date()),"dateOfBirth":this.formatDate(new Date()), 'appointmentTime': this.formatTime(new Date()), 'officeAddress1': "", 'officeAddress2': "" }
+        this.state = { 'salaryMode': 'Bank Credit', "otherLoan": "Yes", "appointmentDate": this.formatDate(new Date()), "dateOfBirth": this.formatDate(new Date()), 'appointmentTime': this.formatTime(new Date()), 'officeAddress1': "", 'officeAddress2': "" }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -122,6 +122,11 @@ class HomePage extends React.Component {
         }
 
     }
+    handleDateOfBirthValidation(birthday) {
+        var ageDifMs = Date.now() - birthday.getTime();
+        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+        return Math.abs(ageDate.getUTCFullYear() - 1970) >= 21 ? true : false;
+    }
     handleChange(event) {
         const name = event.target.name;
         this.setState({
@@ -135,24 +140,32 @@ class HomePage extends React.Component {
         const customer = this.state;
         const { user, users } = this.props;
         customer["created_by"] = user.username;
-        if (this.handleMobileValidation(customer.mobileNumber) && this.handleEmailValidation(customer.emailId) && this.handleNumericValidation(customer.netSalary) && this.handleLoanAmountValidation(customer.loanAmount) && this.handleNumericValidation(customer.officePincode) && this.handleTextValidation(customer) && this.handlePanCardValidation(customer.panNumber)) {
-            fetch('/api/leadinfo?', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(customer)
-            }).then(function (response) {
-                return response.json()
-            }).then(function (body) {
-                if (body.result == "success") {
-                    alert("Form Submitted Successfully");
-                    location.reload();
-                }
-                else {
-                    alert("Form Has Errors");
-                }
-            });
+        var dobArray = customer.dateOfBirth.split('-');
+        if (!this.handleDateOfBirthValidation(new Date(dobArray[0], dobArray[1], dobArray[2]))) {
+            alert("Age must be more than 21 years");
         }
-
+        else {
+            if (this.handleMobileValidation(customer.mobileNumber) && this.handleEmailValidation(customer.emailId) && this.handleNumericValidation(customer.netSalary) && this.handleLoanAmountValidation(customer.loanAmount) && this.handleNumericValidation(customer.officePincode) && this.handleTextValidation(customer) && this.handlePanCardValidation(customer.panNumber)) {
+                fetch('/api/leadinfo?', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(customer)
+                }).then(function (response) {
+                    return response.json()
+                }).then(function (body) {
+                    if (body.result == "success") {
+                        alert("Form Submitted Successfully");
+                        location.reload();
+                    }
+                    else {
+                        alert("Server is down...Please try after sometime");
+                    }
+                });
+            }
+            else {
+                alert("Form Has Errors");
+            }
+        }
 
     }
 

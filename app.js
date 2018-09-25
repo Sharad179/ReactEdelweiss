@@ -129,7 +129,6 @@ app.all('/leadinfo', upload.array(), function (req, res, next) {
 app.all('/listleads', upload.array(), function (req, res, next) {
 
   var querystring = "SELECT * FROM Edelweissdata WHERE STATUS = ''";
-  console.log(querystring)
   connection.query(querystring, function (err, result) {
     if (err) {
       res.json({ "result": "failed" });

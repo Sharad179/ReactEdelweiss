@@ -47535,6 +47535,13 @@ var HomePage = function (_React$Component) {
             }
         }
     }, {
+        key: 'handleDateOfBirthValidation',
+        value: function handleDateOfBirthValidation(birthday) {
+            var ageDifMs = Date.now() - birthday.getTime();
+            var ageDate = new Date(ageDifMs); // miliseconds from epoch
+            return Math.abs(ageDate.getUTCFullYear() - 1970) >= 21 ? true : false;
+        }
+    }, {
         key: 'handleChange',
         value: function handleChange(event) {
             var name = event.target.name;
@@ -47551,21 +47558,28 @@ var HomePage = function (_React$Component) {
                 users = _props.users;
 
             customer["created_by"] = user.username;
-            if (this.handleMobileValidation(customer.mobileNumber) && this.handleEmailValidation(customer.emailId) && this.handleNumericValidation(customer.netSalary) && this.handleLoanAmountValidation(customer.loanAmount) && this.handleNumericValidation(customer.officePincode) && this.handleTextValidation(customer) && this.handlePanCardValidation(customer.panNumber)) {
-                fetch('/api/leadinfo?', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(customer)
-                }).then(function (response) {
-                    return response.json();
-                }).then(function (body) {
-                    if (body.result == "success") {
-                        alert("Form Submitted Successfully");
-                        location.reload();
-                    } else {
-                        alert("Form Has Errors");
-                    }
-                });
+            var dobArray = customer.dateOfBirth.split('-');
+            if (!this.handleDateOfBirthValidation(new Date(dobArray[0], dobArray[1], dobArray[2]))) {
+                alert("Age must be more than 21 years");
+            } else {
+                if (this.handleMobileValidation(customer.mobileNumber) && this.handleEmailValidation(customer.emailId) && this.handleNumericValidation(customer.netSalary) && this.handleLoanAmountValidation(customer.loanAmount) && this.handleNumericValidation(customer.officePincode) && this.handleTextValidation(customer) && this.handlePanCardValidation(customer.panNumber)) {
+                    fetch('/api/leadinfo?', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(customer)
+                    }).then(function (response) {
+                        return response.json();
+                    }).then(function (body) {
+                        if (body.result == "success") {
+                            alert("Form Submitted Successfully");
+                            location.reload();
+                        } else {
+                            alert("Server is down...Please try after sometime");
+                        }
+                    });
+                } else {
+                    alert("Form Has Errors");
+                }
             }
         }
     }, {
