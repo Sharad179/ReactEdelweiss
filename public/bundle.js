@@ -47535,6 +47535,17 @@ var HomePage = function (_React$Component) {
             }
         }
     }, {
+        key: 'handleAddressValidation',
+        value: function handleAddressValidation(inputtxt) {
+            var addressPattern = /[^<>]{1,100}/;
+            if (inputtxt.match(addressPattern)) {
+                return true;
+            } else {
+
+                return false;
+            }
+        }
+    }, {
         key: 'handleDateOfBirthValidation',
         value: function handleDateOfBirthValidation(birthday) {
             var ageDifMs = Date.now() - birthday.getTime();
@@ -47559,7 +47570,9 @@ var HomePage = function (_React$Component) {
 
             customer["created_by"] = user.username;
             var dobArray = customer.dateOfBirth.split('-');
-            if (!this.handleDateOfBirthValidation(new Date(dobArray[0], dobArray[1], dobArray[2]))) {
+            if (!(this.handleAddressValidation(customer.officeAddress1) && this.handleAddressValidation(customer.officeAddress2))) {
+                alert("Address must not include > or < symbol");
+            } else if (!this.handleDateOfBirthValidation(new Date(dobArray[0], dobArray[1], dobArray[2]))) {
                 alert("Age must be more than 21 years");
             } else {
                 if (this.handleMobileValidation(customer.mobileNumber) && this.handleEmailValidation(customer.emailId) && this.handleNumericValidation(customer.netSalary) && this.handleLoanAmountValidation(customer.loanAmount) && this.handleNumericValidation(customer.officePincode) && this.handleTextValidation(customer) && this.handlePanCardValidation(customer.panNumber)) {
@@ -47958,7 +47971,7 @@ var HomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'officeAddress1', onChange: this.handleChange, required: true })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'officeAddress1', onChange: this.handleChange, pattern: '[^<>]{1,100}', required: true })
                                         )
                                     )
                                 ),
@@ -47981,7 +47994,7 @@ var HomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'officeAddress2', onChange: this.handleChange })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'officeAddress2', onChange: this.handleChange, pattern: '[^<>]{1,100}' })
                                         )
                                     )
                                 )

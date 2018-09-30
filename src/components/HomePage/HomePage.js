@@ -122,6 +122,16 @@ class HomePage extends React.Component {
         }
 
     }
+    handleAddressValidation(inputtxt){
+        var addressPattern = /[^<>]{1,100}/;
+        if ((inputtxt.match(addressPattern))) {
+            return true;
+        }
+        else {
+
+            return false;
+        }
+    }
     handleDateOfBirthValidation(birthday) {
         var ageDifMs = Date.now() - birthday.getTime();
         var ageDate = new Date(ageDifMs); // miliseconds from epoch
@@ -141,7 +151,10 @@ class HomePage extends React.Component {
         const { user, users } = this.props;
         customer["created_by"] = user.username;
         var dobArray = customer.dateOfBirth.split('-');
-        if (!this.handleDateOfBirthValidation(new Date(dobArray[0], dobArray[1], dobArray[2]))) {
+        if(!(this.handleAddressValidation(customer.officeAddress1) && this.handleAddressValidation(customer.officeAddress2))){
+            alert("Address must not include > or < symbol");
+        }
+        else if (!this.handleDateOfBirthValidation(new Date(dobArray[0], dobArray[1], dobArray[2]))) {
             alert("Age must be more than 21 years");
         }
         else {
@@ -315,14 +328,14 @@ class HomePage extends React.Component {
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}>Office Address Line 1</b></Col>
                                     <Col sm={12}>
-                                        <FormControl type="text" name="officeAddress1" onChange={this.handleChange} required />
+                                        <FormControl type="text" name="officeAddress1" onChange={this.handleChange} pattern='[^<>]{1,100}' required />
                                     </Col>
                                 </FormGroup></Col>
                                 <Col sm={6}>  <FormGroup controlId="formHorizontalOfficeAddress2">
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}>Office Address Line 2</b></Col>
                                     <Col sm={12}>
-                                        <FormControl type="text" name="officeAddress2" onChange={this.handleChange} />
+                                        <FormControl type="text" name="officeAddress2" onChange={this.handleChange} pattern='[^<>]{1,100}'/>
                                     </Col>
                                 </FormGroup></Col>
                             </Row>
