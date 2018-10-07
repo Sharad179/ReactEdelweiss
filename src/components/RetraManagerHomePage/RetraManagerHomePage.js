@@ -7,18 +7,30 @@ import { connect } from 'react-redux';
 import { Form, Row, Col, FormControl, FormGroup, ControlLabel, InputGroup, DropdownButton, MenuItem, Button } from 'react-bootstrap';
 
 // import { userActions } from '../_actions';
-class HomePage extends React.Component {
+class RetraManagerHomePage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 'salaryMode': 'Bank Credit', "otherLoan": "Yes", "appointmentDate": this.formatDate(new Date()), "dateOfBirth": this.formatDate(new Date()), 'appointmentTime': this.formatTime(new Date()), 'officeAddress1': "", 'officeAddress2': "" }
+        this.state = { 'userlist': [], 'selecteduser': '', 'salaryMode': 'Bank Credit', "otherLoan": "Yes", "appointmentDate": this.formatDate(new Date()), "dateOfBirth": this.formatDate(new Date()), 'appointmentTime': this.formatTime(new Date()), 'officeAddress1': "", 'officeAddress2': "" }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-
-        document.body.style.background = "#f4f8fb"
+        var _this = this;
+        document.body.style.background = "#f4f8fb";
+        fetch('/api/userlist?', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        }).then(function (response) {
+            return response.json()
+        }).then(function (body) {
+            _this.state.selecteduser = '';
+            _this.setState({
+                "userlist": body.result // Expecting "data" is an array
+            });
+        });
 
     }
+
     formatTime(Date) {
         let newdate
         let newtime
@@ -149,7 +161,12 @@ class HomePage extends React.Component {
         event.preventDefault();
         const customer = this.state;
         const { user, users } = this.props;
-        customer["created_by"] = user.username;
+        if (this.state.selecteduser) {
+            customer["created_by"] = this.state.selecteduser;
+        }
+        else {
+            customer["created_by"] = user.username;
+        }
         var dobArray = customer.dateOfBirth.split('-');
         if (!(this.handleAddressValidation(customer.officeAddress1) && this.handleAddressValidation(customer.officeAddress2))) {
             alert("Address must not include > or < symbol");
@@ -191,6 +208,23 @@ class HomePage extends React.Component {
                         <h5 className="card-title text-center" style={{ fontWeight: 600, color: "white" }}><u>Salary Advance Leads</u></h5>
 
                         <Form encType="multipart/form-data" onSubmit={this.handleSubmit}>
+                            <Row>
+                                <Col md={6}>
+                                    <FormGroup controlId="formHorizontalUsername">
+                                        
+                                        <Col sm={12}>
+                                            <FormControl componentClass="select" onChange={this.handleChange} className="col-sm-12 form-control" name = "selecteduser" value={this.state.selecteduser}>
+                                              <option value="">Select User</option>
+                                                {this.state.userlist.map((option, index) => {
+                                                    return (<option key={index} value={option}>{option}</option>)
+                                                })
+                                                }
+                                            </FormControl>
+
+                                        </Col>
+                                    </FormGroup>
+                                </Col>
+                            </Row>
                             <Row>
                                 <Col md={6}>
                                     <FormGroup controlId="formHorizontalAggregatorName">
@@ -438,4 +472,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default withRouter(connect(mapStateToProps)(HomePage));
+export default withRouter(connect(mapStateToProps)(RetraManagerHomePage));

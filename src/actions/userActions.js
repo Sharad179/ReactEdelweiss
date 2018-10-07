@@ -19,8 +19,11 @@ function login(username, password) {
                     if (user.role == 'admin') {
                         history.push('/admin');
                     }
-                    else {
+                    else if(user.role=="user"){
                         history.push('/home');
+                    }
+                    else{
+                        history.push('/rmpage');
                     }
                     window.location.href = window.location.href;
                 },

@@ -13,6 +13,7 @@ import HomePage from '../HomePage/HomePage';
 import TopNav from '../TopNav/TopNav';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import EditModeHomePage from '../EditModeHomePage/EditModeHomePage';
+import RetraManagerHomePage from '../RetraManagerHomePage/RetraManagerHomePage';
 
 class BookList extends React.Component {
     render() {
@@ -30,6 +31,7 @@ class BookList extends React.Component {
                 <Route path="/home" component={HomePage} />
                 <Route path="/admin" component={AdminPage} />
                 <Route path="/edithome" component={EditModeHomePage} />
+                <Route path="/rmpage" component = {RetraManagerHomePage} />
             </div>
         )
         return (
@@ -38,6 +40,7 @@ class BookList extends React.Component {
                     <PrivateRoute path="/home" component={DefaultContainer} />
                     <PrivateRoute path="/admin" component={DefaultContainer} />
                     <PrivateRoute path="/edithome" component={DefaultContainer} />
+                    <PrivateRoute path="/rmpage" component = {DefaultContainer} />
                     <Route path="/login" component={LoginContainer} />
                 </div>
         )

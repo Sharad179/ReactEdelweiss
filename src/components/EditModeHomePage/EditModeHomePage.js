@@ -10,7 +10,7 @@ import { Form, Row, Col, FormControl, FormGroup, ControlLabel, InputGroup, Dropd
 class EditModeHomePage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 'aggregator': '', 'city': '', 'country': '', 'companyName': '', 'loanAmount': '', 'salaryMode': '', 'netSalary': '', 'contactPerson': '', "otherLoan": '', "appointmentDate": '', 'companyExp': '', "dateOfBirth": '', 'emailId': '', 'mobileNumber': '', 'appointmentTime': '', 'officeAddress': '', 'panNumber': '', 'pincode': '', 'state': '' };
+        this.state = { 'aggregator': '', 'city': '', 'country': '', 'companyName': '', 'loanAmount': '', 'salaryMode': '', 'netSalary': '', 'contactPerson': '', "otherLoan": '', "appointmentDate": '', 'companyExp': '', "dateOfBirth": '', 'emailId': '', 'mobileNumber': '', 'appointmentTime': '', "numberOfEmployees":'',"monthlyObligation":'','officeAddress': '', 'panNumber': '', 'pincode': '', 'state': '' };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -32,7 +32,8 @@ class EditModeHomePage extends React.Component {
         }).then(function (response) {
             return response.json()
         }).then(function (body) {
-            _this.setState({ 'aggregator': body.result[0].AGGREGATOR_NAME, 'loanAmount': body.result[0].LOAN_AMOUNT, 'city': body.result[0].CITY, 'country': body.result[0].COUNTRY, 'companyName': body.result[0].COMPANY_NAME, 'salaryMode': body.result[0].MODE_OF_SALARY, 'contactPerson': body.result[0].CONTACT_PERSON, "otherLoan": body.result[0].OTHER_LOAN, "appointmentDate": body.result[0].APPOINTMENT_DATE.substring(0, 10), 'companyExp': body.result[0].CURRENT_COMPANY_EXPERIENCE, "netSalary": body.result[0].NET_SALARY, "dateOfBirth": body.result[0].DATE_OF_BIRTH.substring(0, 10), 'emailId': body.result[0].EMAIL, 'mobileNumber': body.result[0].MOBILE_NUMBER, 'appointmentTime': body.result[0].APPOINTMENT_TIME, 'officeAddress': body.result[0].OFFICE_ADDRESS, 'panNumber': body.result[0].PAN_CARD, 'pincode': body.result[0].PINCODE, 'state': body.result[0].STATE });
+            console.log(body);
+            _this.setState({ 'aggregator': body.result[0].AGGREGATOR_NAME, 'loanAmount': body.result[0].LOAN_AMOUNT, 'city': body.result[0].CITY, 'country': body.result[0].COUNTRY, 'companyName': body.result[0].COMPANY_NAME, 'salaryMode': body.result[0].MODE_OF_SALARY, 'contactPerson': body.result[0].CONTACT_PERSON,"numberOfEmployees":body.result[0].COMPANY_NUMBER_OF_EMPLOYEES?body.result[0].COMPANY_NUMBER_OF_EMPLOYEES:"NIL","monthlyObligation":body.result[0].CURRENT_MONTHLY_OBLIGATION?body.result[0].CURRENT_MONTHLY_OBLIGATION:"NIL", "otherLoan": body.result[0].OTHER_LOAN, "appointmentDate": body.result[0].APPOINTMENT_DATE.substring(0, 10), 'companyExp': body.result[0].CURRENT_COMPANY_EXPERIENCE, "netSalary": body.result[0].NET_SALARY, "dateOfBirth": body.result[0].DATE_OF_BIRTH.substring(0, 10), 'emailId': body.result[0].EMAIL, 'mobileNumber': body.result[0].MOBILE_NUMBER, 'appointmentTime': body.result[0].APPOINTMENT_TIME, 'officeAddress': body.result[0].OFFICE_ADDRESS, 'panNumber': body.result[0].PAN_CARD, 'pincode': body.result[0].PINCODE, 'state': body.result[0].STATE });
         });
         localStorage.removeItem('panInfo');
     }
@@ -48,7 +49,7 @@ class EditModeHomePage extends React.Component {
         event.preventDefault();
         const customer = this.state;
         const { user, users } = this.props;
-        if (event.target.value == 'Approve') {
+        if (event.target.value == 'Submit') {
             customer.applicationStatus = 'Approved';
         }
         else {
@@ -116,17 +117,33 @@ class EditModeHomePage extends React.Component {
                                         </Col>
                                     </FormGroup>
                                 </Col>
+                                <Col sm={6}> <FormGroup controlId="formHorizontalNumberOfEmployees">
+                                    <Col componentClass={ControlLabel} sm={12}>
+                                        <b style={{ fontWeight: 600, color: "white" }}>Number of Employees</b></Col>
+                                    <Col sm={12}>
+                                        <FormControl readOnly type="text" name="numberOfEmployees" value={this.state.numberOfEmployees} onChange={this.handleChange}/>
+                                    </Col>
+                                </FormGroup></Col>
 
+
+                            </Row>
+                            <Row>
                                 <Col md={6}>
                                     <FormGroup controlId="formHorizontalLoanAmount">
                                         <Col componentClass={ControlLabel} sm={12}>
                                             <b style={{ fontWeight: 600, color: "white" }}>Loan Amount</b></Col>
                                         <Col sm={12}>
-                                            <FormControl readOnly type="text" name="loanAmount" value={this.state.loanAmount} onChange={this.handleChange} />
+                                            <FormControl readOnly type="text" name="loanAmount" value={this.state.loanAmount} onChange={this.handleChange}/>
                                         </Col>
                                     </FormGroup>
                                 </Col>
-
+                                <Col sm={6}>  <FormGroup controlId="formHorizontalMonthlyObligation">
+                                    <Col componentClass={ControlLabel} sm={12}>
+                                        <b style={{ fontWeight: 600, color: "white" }}>Current Monthly Obligations</b></Col>
+                                    <Col sm={12}>
+                                        <FormControl readOnly type="text" name="monthlyObligation" value={this.state.monthlyObligation} onChange={this.handleChange}/>
+                                    </Col>
+                                </FormGroup></Col>
                             </Row>
                             <Row>
                                 <Col md={6}>
@@ -281,7 +298,7 @@ class EditModeHomePage extends React.Component {
                             <Row>
 
                                 <Col sm={6}>
-                                    <input type="submit" name="status" value="Approve" onClick={this.handleSubmit} style={{ color: "black" }} className="btn btn-warning col-sm-12" />
+                                    <input type="submit" name="status" value="Submit" onClick={this.handleSubmit} style={{ color: "black" }} className="btn btn-warning col-sm-12" />
                                 </Col>
                                 <Col sm={6}>
                                     <input type="submit" name="status" value="Reject" onClick={this.handleSubmit} style={{ color: "black" }} className="btn btn-danger col-sm-12" />

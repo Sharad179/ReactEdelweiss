@@ -73,11 +73,11 @@ app.get('*', function (req, res) {
 
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-  host: '',
-  port: '',
-  user: '',
-  password: '',
-  database: ''
+  host: 'retrainfo.cl2xcsug0xte.ap-south-1.rds.amazonaws.com',
+  port: '3306',
+  user: 'retrauserdata',
+  password: 's3cr3tretra',
+  database: 'retrafinancedb'
 });
 
 app.all('/authenticate', upload.array(), function (req, res, next) {
@@ -114,9 +114,25 @@ app.all('/authenticate', upload.array(), function (req, res, next) {
     }
   })
 })
+app.all('/userlist?', upload.array(), function (req, res, next) {
+
+  var querystring = "select USERNAME from USERLIST where ROLE = 'user'";
+  connection.query(querystring, function (err, result) {
+    if (err) {
+      res.json({ "result": "failure" });
+      throw err
+    } else {
+      var userlist = [];
+      for(var i in result){
+          userlist.push(result[i].USERNAME);
+      }
+      res.json({ "result": userlist });
+    }
+  })
+});
 app.all('/leadinfo', upload.array(), function (req, res, next) {
 
-  var querystring = "INSERT INTO Edelweissdata (AGGREGATOR_NAME,CONTACT_PERSON,COMPANY_NAME,CITY,MOBILE_NUMBER,EMAIL,CURRENT_COMPANY_EXPERIENCE,NET_SALARY,MODE_OF_SALARY,OTHER_LOAN,OFFICE_ADDRESS,APPOINTMENT_DATE,APPOINTMENT_TIME,CREATED_BY,LOAN_AMOUNT,STATE,PINCODE,COUNTRY,PAN_CARD,DATE_OF_BIRTH,ENTRY_DATE,STATUS,COMMENTS) VALUES ('" + req.body.aggregator + "','" + req.body.contactPerson + "','" + req.body.companyName + "','" + req.body.city + "','" + req.body.mobileNumber + "','" + req.body.emailId + "','" + req.body.companyExp + "','" + req.body.netSalary + "','" + req.body.salaryMode + "','" + req.body.otherLoan + "','" + req.body.officeAddress1 + " " + req.body.officeAddress2 + "','" + req.body.appointmentDate + "','"  + req.body.appointmentTime + "','"+req.body.created_by+ "','"+req.body.loanAmount + "','"+ req.body.officeState + "','" + req.body.officePincode + "','" + req.body.officeCountry + "','" +req.body.panNumber + "','"+req.body.dateOfBirth + "','"+startTime()+ "','"+''+"','" +''+ "')";
+  var querystring = "INSERT INTO Edelweissdata (AGGREGATOR_NAME,CONTACT_PERSON,COMPANY_NAME,CITY,MOBILE_NUMBER,EMAIL,CURRENT_COMPANY_EXPERIENCE,NET_SALARY,MODE_OF_SALARY,OTHER_LOAN,OFFICE_ADDRESS,COMPANY_NUMBER_OF_EMPLOYEES,APPOINTMENT_DATE,APPOINTMENT_TIME,CREATED_BY,LOAN_AMOUNT,CURRENT_MONTHLY_OBLIGATION,STATE,PINCODE,COUNTRY,PAN_CARD,DATE_OF_BIRTH,ENTRY_DATE,STATUS,COMMENTS) VALUES ('" + req.body.aggregator + "','" + req.body.contactPerson + "','" + req.body.companyName + "','" + req.body.city + "','" + req.body.mobileNumber + "','" + req.body.emailId + "','" + req.body.companyExp + "','" + req.body.netSalary + "','" + req.body.salaryMode + "','" + req.body.otherLoan + "','" + req.body.officeAddress1 + " " + req.body.officeAddress2 + "','" + req.body.numberOfEmployees + "','" + req.body.appointmentDate + "','"  + req.body.appointmentTime + "','"+req.body.created_by+ "','"+req.body.loanAmount + "','"+req.body.monthlyObligation + "','"+ req.body.officeState + "','" + req.body.officePincode + "','" + req.body.officeCountry + "','" +req.body.panNumber + "','"+req.body.dateOfBirth + "','"+startTime()+ "','"+''+"','" +''+ "')";
   connection.query(querystring, function (err, result) {
     if (err) {
       res.json({ "result": "failure" });
