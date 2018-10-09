@@ -12048,7 +12048,6 @@ var EditModeHomePage = function (_React$Component) {
         key: 'ListDetails',
         value: function ListDetails() {
             var pan_selected = localStorage.getItem('panInfo');
-
             var params = { "panNumber": pan_selected };
             var _this = this;
             fetch('/api/leaddetails?', {
@@ -12148,7 +12147,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'aggregator', value: this.state.aggregator })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'aggregator', value: this.state.aggregator })
                                         )
                                     )
                                 ),
@@ -12170,7 +12169,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'contactPerson', value: this.state.contactPerson, onChange: this.handleChange })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'contactPerson', value: this.state.contactPerson, onChange: this.handleChange })
                                         )
                                     )
                                 )
@@ -12197,7 +12196,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'companyName', value: this.state.companyName, onChange: this.handleChange })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'companyName', value: this.state.companyName, onChange: this.handleChange })
                                         )
                                     )
                                 ),
@@ -12220,7 +12219,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'numberOfEmployees', value: this.state.numberOfEmployees, onChange: this.handleChange })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'numberOfEmployees', value: this.state.numberOfEmployees, onChange: this.handleChange })
                                         )
                                     )
                                 )
@@ -12246,7 +12245,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'loanAmount', value: this.state.loanAmount, onChange: this.handleChange })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'loanAmount', value: this.state.loanAmount, onChange: this.handleChange })
                                         )
                                     )
                                 ),
@@ -12269,7 +12268,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'monthlyObligation', value: this.state.monthlyObligation, onChange: this.handleChange })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'monthlyObligation', value: this.state.monthlyObligation, onChange: this.handleChange })
                                         )
                                     )
                                 )
@@ -12295,7 +12294,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'mobileNumber', maxLength: '10', value: this.state.mobileNumber, onChange: this.handleChange })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'mobileNumber', maxLength: '10', value: this.state.mobileNumber, onChange: this.handleChange })
                                         )
                                     )
                                 ),
@@ -12317,7 +12316,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'email', name: 'emailId', value: this.state.emailId, onChange: this.handleChange, required: true })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'email', name: 'emailId', value: this.state.emailId, onChange: this.handleChange, required: true })
                                         )
                                     )
                                 )
@@ -12367,7 +12366,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'date', name: 'dateOfBirth', value: this.state.dateOfBirth, onChange: this.handleChange, required: true })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'date', name: 'dateOfBirth', value: this.state.dateOfBirth, onChange: this.handleChange, required: true })
                                         )
                                     )
                                 )
@@ -12394,7 +12393,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'companyExp', value: this.state.companyExp, onChange: this.handleChange })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'companyExp', value: this.state.companyExp, onChange: this.handleChange })
                                         )
                                     )
                                 ),
@@ -12417,7 +12416,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'netSalary', value: this.state.netSalary, onChange: this.handleChange })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'netSalary', value: this.state.netSalary, onChange: this.handleChange })
                                         )
                                     )
                                 )
@@ -12444,7 +12443,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'salaryMode', value: this.state.salaryMode, onChange: this.handleChange })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'salaryMode', value: this.state.salaryMode, onChange: this.handleChange })
                                         )
                                     )
                                 ),
@@ -12466,7 +12465,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'otherLoan', onChange: this.handleChange, value: this.state.otherLoan })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'otherLoan', onChange: this.handleChange, value: this.state.otherLoan })
                                         )
                                     )
                                 )
@@ -12493,7 +12492,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'officeAddress', value: this.state.officeAddress, onChange: this.handleChange, required: true })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'officeAddress', value: this.state.officeAddress, onChange: this.handleChange, required: true })
                                         )
                                     )
                                 ),
@@ -12516,7 +12515,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'city', onChange: this.handleChange, value: this.state.city })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'city', onChange: this.handleChange, value: this.state.city })
                                         )
                                     )
                                 )
@@ -12543,7 +12542,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'officeState', onChange: this.handleChange, value: this.state.state })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'state', onChange: this.handleChange, value: this.state.state })
                                         )
                                     )
                                 ),
@@ -12566,7 +12565,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'officePincode', onChange: this.handleChange, value: this.state.pincode })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'pincode', onChange: this.handleChange, value: this.state.pincode })
                                         )
                                     )
                                 )
@@ -12593,7 +12592,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'text', name: 'officeCountry', onChange: this.handleChange, value: this.state.country, pattern: '[a-zA-Z. ]{1,50}', required: true })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', name: 'country', onChange: this.handleChange, value: this.state.country, pattern: '[a-zA-Z. ]{1,50}', required: true })
                                         )
                                     )
                                 ),
@@ -12615,7 +12614,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'Date', name: 'appointmentDate', value: this.state.appointmentDate, onChange: this.handleChange, required: true })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'Date', name: 'appointmentDate', value: this.state.appointmentDate, onChange: this.handleChange, required: true })
                                         )
                                     )
                                 )
@@ -12641,7 +12640,7 @@ var EditModeHomePage = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactBootstrap.Col,
                                             { sm: 12 },
-                                            _react2.default.createElement(_reactBootstrap.FormControl, { readOnly: true, type: 'Time', name: 'appointmentTime', value: this.state.appointmentTime, onChange: this.handleChange, required: true })
+                                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'Time', name: 'appointmentTime', value: this.state.appointmentTime, onChange: this.handleChange, required: true })
                                         )
                                     )
                                 ),

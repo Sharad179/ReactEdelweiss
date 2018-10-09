@@ -73,11 +73,11 @@ app.get('*', function (req, res) {
 
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-  host: '',
-  port: '',
-  user: '',
-  password: '',
-  database: ''
+  host: 'retrainfo.cl2xcsug0xte.ap-south-1.rds.amazonaws.com',
+  port: '3306',
+  user: 'retrauserdata',
+  password: 's3cr3tretra',
+  database: 'retrafinancedb'
 });
 
 app.all('/authenticate', upload.array(), function (req, res, next) {
@@ -168,7 +168,9 @@ app.all('/leaddetails', upload.array(), function (req, res, next) {
 });
 app.all('/leadstatus', upload.array(), function (req, res, next) {
 
-  var querystring = "Update Edelweissdata SET STATUS = '" + req.body.applicationStatus + "' , COMMENTS = '"+ req.body.comments +"' , ADMIN_ACTION_DATE = '"+ startTime() +"' WHERE PAN_CARD = '" + req.body.panNumber + "'";
+  // var querystring = "Update Edelweissdata SET STATUS = '" + req.body.applicationStatus + "' , COMMENTS = '"+ req.body.comments +"' , ADMIN_ACTION_DATE = '"+ startTime() +"' WHERE PAN_CARD = '" + req.body.panNumber + "'";
+  var querystring = "Update Edelweissdata SET STATUS = '" + req.body.applicationStatus + "' , COMMENTS = '"+ req.body.comments+ "' , DATE_OF_BIRTH = '"+ req.body.dateOfBirth+ "' , PAN_CARD = '"+ req.body.panNumber+ "' , COUNTRY = '"+ req.body.country+ "' , PINCODE = '"+ req.body.pincode+ "' , STATE = '"+ req.body.state+ "' , CURRENT_MONTHLY_OBLIGATION = '"+ req.body.monthlyObligation+ "' , LOAN_AMOUNT = '"+ req.body.loanAmount+ "' , APPOINTMENT_TIME = '"+ req.body.appointmentTime+ "' , APPOINTMENT_DATE = '"+ req.body.appointmentDate+ "' , COMPANY_NUMBER_OF_EMPLOYEES = '"+ req.body.numberOfEmployees+ "' , OFFICE_ADDRESS = '"+ req.body.officeAddress+ "' , OTHER_LOAN = '"+ req.body.otherLoan+ "' , MODE_OF_SALARY = '"+ req.body.salaryMode+ "' , NET_SALARY = '"+ req.body.netSalary+ "' , CURRENT_COMPANY_EXPERIENCE = '"+ req.body.companyExp+ "' , EMAIL = '"+ req.body.emailId+ "' , MOBILE_NUMBER = '"+ req.body.mobileNumber+ "' , CITY = '"+ req.body.city+ "' , COMPANY_NAME = '"+ req.body.companyName+ "' , CONTACT_PERSON = '"+ req.body.contactPerson+ "' , AGGREGATOR_NAME = '"+ req.body.aggregator +"' , ADMIN_ACTION_DATE = '"+ startTime() +"' WHERE PAN_CARD = '" + req.body.panNumber + "'";
+  console.log(querystring);
   connection.query(querystring, function (err, result) {
     if (err) {
       res.json({ "result": "failed" });

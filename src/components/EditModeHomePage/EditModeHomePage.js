@@ -22,7 +22,6 @@ class EditModeHomePage extends React.Component {
     }
     ListDetails() {
         var pan_selected = localStorage.getItem('panInfo');
-        
         const params = { "panNumber": pan_selected};
         var _this = this;
         fetch('/api/leaddetails?', {
@@ -91,7 +90,7 @@ class EditModeHomePage extends React.Component {
                                             <b style={{ fontWeight: 600, color: "white" }}>Aggregator Name</b> </Col>
                                         <Col sm={12}>
 
-                                            <FormControl readOnly type="text" name="aggregator" value={this.state.aggregator} />
+                                            <FormControl type="text" name="aggregator" value={this.state.aggregator} />
 
                                         </Col>
                                     </FormGroup>
@@ -101,7 +100,7 @@ class EditModeHomePage extends React.Component {
                                         <Col componentClass={ControlLabel} sm={12}>
                                             <b style={{ fontWeight: 600, color: "white" }}>Borrower's Name (as per PAN Card)</b></Col>
                                         <Col sm={12}>
-                                            <FormControl readOnly type="text" name="contactPerson" value={this.state.contactPerson} onChange={this.handleChange}/>
+                                            <FormControl type="text" name="contactPerson" value={this.state.contactPerson} onChange={this.handleChange}/>
                                         </Col>
                                     </FormGroup>
                                 </Col>
@@ -113,7 +112,7 @@ class EditModeHomePage extends React.Component {
                                         <Col componentClass={ControlLabel} sm={12}>
                                             <b style={{ fontWeight: 600, color: "white" }}>Company Name</b> </Col>
                                         <Col sm={12}>
-                                            <FormControl readOnly type="text" name="companyName" value={this.state.companyName} onChange={this.handleChange}/>
+                                            <FormControl type="text" name="companyName" value={this.state.companyName} onChange={this.handleChange}/>
                                         </Col>
                                     </FormGroup>
                                 </Col>
@@ -121,7 +120,7 @@ class EditModeHomePage extends React.Component {
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}>Number of Employees</b></Col>
                                     <Col sm={12}>
-                                        <FormControl readOnly type="text" name="numberOfEmployees" value={this.state.numberOfEmployees} onChange={this.handleChange}/>
+                                        <FormControl type="text" name="numberOfEmployees" value={this.state.numberOfEmployees} onChange={this.handleChange}/>
                                     </Col>
                                 </FormGroup></Col>
 
@@ -133,7 +132,7 @@ class EditModeHomePage extends React.Component {
                                         <Col componentClass={ControlLabel} sm={12}>
                                             <b style={{ fontWeight: 600, color: "white" }}>Loan Amount</b></Col>
                                         <Col sm={12}>
-                                            <FormControl readOnly type="text" name="loanAmount" value={this.state.loanAmount} onChange={this.handleChange}/>
+                                            <FormControl type="text" name="loanAmount" value={this.state.loanAmount} onChange={this.handleChange}/>
                                         </Col>
                                     </FormGroup>
                                 </Col>
@@ -141,7 +140,7 @@ class EditModeHomePage extends React.Component {
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}>Current Monthly Obligations</b></Col>
                                     <Col sm={12}>
-                                        <FormControl readOnly type="text" name="monthlyObligation" value={this.state.monthlyObligation} onChange={this.handleChange}/>
+                                        <FormControl type="text" name="monthlyObligation" value={this.state.monthlyObligation} onChange={this.handleChange}/>
                                     </Col>
                                 </FormGroup></Col>
                             </Row>
@@ -151,7 +150,7 @@ class EditModeHomePage extends React.Component {
                                         <Col componentClass={ControlLabel} sm={12}>
                                             <b style={{ fontWeight: 600, color: "white" }}>Mobile No.</b></Col>
                                         <Col sm={12}>
-                                            <FormControl readOnly type="text" name="mobileNumber" maxLength="10" value={this.state.mobileNumber} onChange={this.handleChange}/>
+                                            <FormControl type="text" name="mobileNumber" maxLength="10" value={this.state.mobileNumber} onChange={this.handleChange}/>
                                         </Col>
                                     </FormGroup>
 
@@ -162,7 +161,7 @@ class EditModeHomePage extends React.Component {
                                         <Col componentClass={ControlLabel} sm={12}>
                                             <b style={{ fontWeight: 600, color: "white" }}>Email ID</b></Col>
                                         <Col sm={12}>
-                                            <FormControl readOnly type="email" name="emailId" value={this.state.emailId} onChange={this.handleChange} required />
+                                            <FormControl type="email" name="emailId" value={this.state.emailId} onChange={this.handleChange} required />
                                         </Col>
                                     </FormGroup>
                                 </Col>
@@ -179,7 +178,7 @@ class EditModeHomePage extends React.Component {
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}>Date of Birth</b></Col>
                                     <Col sm={12}>
-                                        <FormControl readOnly type="date" name="dateOfBirth" value={this.state.dateOfBirth} onChange={this.handleChange} required />
+                                        <FormControl type="date" name="dateOfBirth" value={this.state.dateOfBirth} onChange={this.handleChange} required />
                                     </Col>
                                 </FormGroup></Col>
                             </Row>
@@ -189,14 +188,14 @@ class EditModeHomePage extends React.Component {
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}>Current Company Exp (in months)</b></Col>
                                     <Col sm={12}>
-                                        <FormControl readOnly type="text" name="companyExp" value={this.state.companyExp} onChange={this.handleChange}/>
+                                        <FormControl type="text" name="companyExp" value={this.state.companyExp} onChange={this.handleChange}/>
                                     </Col>
                                 </FormGroup></Col>
                                 <Col md={6}>   <FormGroup controlId="formHorizontalNetSalary">
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}>Net Salary</b></Col>
                                     <Col sm={12}>
-                                        <FormControl readOnly type="text" name="netSalary" value={this.state.netSalary} onChange={this.handleChange} />
+                                        <FormControl type="text" name="netSalary" value={this.state.netSalary} onChange={this.handleChange} />
                                     </Col>
                                 </FormGroup></Col>
                             </Row>
@@ -207,14 +206,14 @@ class EditModeHomePage extends React.Component {
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}> Mode of Salary</b></Col>
                                     <Col sm={12}>
-                                        <FormControl readOnly type="text" name="salaryMode" value={this.state.salaryMode} onChange={this.handleChange} />
+                                        <FormControl type="text" name="salaryMode" value={this.state.salaryMode} onChange={this.handleChange} />
                                     </Col>
                                 </FormGroup></Col>
                                 <Col md={6}><FormGroup controlId="formHorizontalPassword">
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}> Other Loan</b></Col>
                                     <Col sm={12}>
-                                        <FormControl readOnly type="text" name="otherLoan" onChange={this.handleChange} value={this.state.otherLoan}/>
+                                        <FormControl type="text" name="otherLoan" onChange={this.handleChange} value={this.state.otherLoan}/>
                                     </Col>
                                 </FormGroup></Col>
                             </Row>
@@ -224,14 +223,14 @@ class EditModeHomePage extends React.Component {
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}>Office Address</b></Col>
                                     <Col sm={12}>
-                                        <FormControl readOnly type="text" name="officeAddress" value={this.state.officeAddress} onChange={this.handleChange} required />
+                                        <FormControl type="text" name="officeAddress" value={this.state.officeAddress} onChange={this.handleChange} required />
                                     </Col>
                                 </FormGroup></Col>
                                 <Col sm={6}> <FormGroup controlId="formHorizontalCity">
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}>City</b></Col>
                                     <Col sm={12}>
-                                        <FormControl readOnly type="text" name="city" onChange={this.handleChange} value={this.state.city}/>
+                                        <FormControl type="text" name="city" onChange={this.handleChange} value={this.state.city}/>
                                     </Col>
                                 </FormGroup></Col>
                             </Row>
@@ -241,14 +240,14 @@ class EditModeHomePage extends React.Component {
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}>State</b></Col>
                                     <Col sm={12}>
-                                        <FormControl readOnly type="text" name="officeState" onChange={this.handleChange} value={this.state.state} />
+                                        <FormControl type="text" name="state" onChange={this.handleChange} value={this.state.state} />
                                     </Col>
                                 </FormGroup></Col>
                                 <Col sm={6}> <FormGroup controlId="formHorizontalPincode">
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}>Pincode</b></Col>
                                     <Col sm={12}>
-                                        <FormControl readOnly type="text" name="officePincode" onChange={this.handleChange} value={this.state.pincode} />
+                                        <FormControl type="text" name="pincode" onChange={this.handleChange} value={this.state.pincode} />
                                     </Col>
                                 </FormGroup></Col>
                             </Row>
@@ -258,7 +257,7 @@ class EditModeHomePage extends React.Component {
                                     <Col componentClass={ControlLabel} sm={12}>
                                         <b style={{ fontWeight: 600, color: "white" }}>Country</b></Col>
                                     <Col sm={12}>
-                                        <FormControl readOnly type="text" name="officeCountry" onChange={this.handleChange} value={this.state.country} pattern="[a-zA-Z. ]{1,50}" required />
+                                        <FormControl type="text" name="country" onChange={this.handleChange} value={this.state.country} pattern="[a-zA-Z. ]{1,50}" required />
                                     </Col>
                                 </FormGroup></Col>
                                 <Col sm={6}>
@@ -266,7 +265,7 @@ class EditModeHomePage extends React.Component {
                                         <Col componentClass={ControlLabel} sm={12}>
                                             <b style={{ fontWeight: 600, color: "white" }}> Appointment Date</b></Col>
                                         <Col sm={12}>
-                                            <FormControl readOnly type="Date" name="appointmentDate" value={this.state.appointmentDate} onChange={this.handleChange} required />
+                                            <FormControl type="Date" name="appointmentDate" value={this.state.appointmentDate} onChange={this.handleChange} required />
                                         </Col>
                                     </FormGroup>
                                 </Col>
@@ -280,7 +279,7 @@ class EditModeHomePage extends React.Component {
                                         <Col componentClass={ControlLabel} sm={12}>
                                             <b style={{ fontWeight: 600, color: "white" }}>Appointment Time</b></Col>
                                         <Col sm={12}>
-                                            <FormControl readOnly type="Time" name="appointmentTime" value={this.state.appointmentTime} onChange={this.handleChange} required />
+                                            <FormControl type="Time" name="appointmentTime" value={this.state.appointmentTime} onChange={this.handleChange} required />
                                         </Col>
                                     </FormGroup>
                                 </Col>
