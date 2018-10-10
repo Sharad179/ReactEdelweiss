@@ -11,6 +11,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import AdminPage from '../AdminPage/AdminPage';
 import HomePage from '../HomePage/HomePage';
 import TopNav from '../TopNav/TopNav';
+import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import EditModeHomePage from '../EditModeHomePage/EditModeHomePage';
 import RetraManagerHomePage from '../RetraManagerHomePage/RetraManagerHomePage';

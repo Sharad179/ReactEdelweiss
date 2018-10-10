@@ -73,12 +73,29 @@ app.get('*', function (req, res) {
 
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-  host: '',
-  port: '',
-  user: '',
-  password: '',
-  database: ''
+  host: 'retrainfo.cl2xcsug0xte.ap-south-1.rds.amazonaws.com',
+  port: '3306',
+  user: 'retrauserdata',
+  password: 's3cr3tretra',
+  database: 'retrafinancedb'
 });
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'srivastavasharad179@gmail.com',
+    pass: 'bangalore@17986'
+  }
+});
+
+var mailOptions = {
+  from: 'srivastavasharad179@gmail.com',
+  to: 'sharad.srivastava@retrafinance.com, mansi.agrawal@retrafinance.com, subhra.datta@retrafinance.com',
+  subject: 'New Lead Entry'
+};
+
+
 
 app.all('/authenticate', upload.array(), function (req, res, next) {
   var querystring = "SELECT * FROM USERLIST WHERE USERNAME = '" + req.body.username + "' AND PASSWORD = '" + req.body.password + "'";
@@ -139,12 +156,33 @@ app.all('/leadinfo', upload.array(), function (req, res, next) {
       throw err
     } else {
       res.json({ "result": "success" });
+      mailOptions.html = "<table style='width:100%;border: 1px solid black'><tr><th style='border: 1px solid black'>Pan Number</th><th style='border: 1px solid black'>Borrower's Name</th><th style='border: 1px solid black'>Mobile Number</th><th style='border: 1px solid black'>Email</th></tr><tr><td style='border: 1px solid black'>"+req.body.panNumber+"</td><td style='border: 1px solid black'>"+req.body.contactPerson+"</td><td style='border: 1px solid black'>"+req.body.mobileNumber+"</td><td style='border: 1px solid black'>"+req.body.emailId+"</td></tr></table>";
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          
+        }
+      });
     }
   })
 });
 app.all('/listleads', upload.array(), function (req, res, next) {
 
   var querystring = "SELECT * FROM Edelweissdata WHERE STATUS = ''";
+  connection.query(querystring, function (err, result) {
+    if (err) {
+      res.json({ "result": "failed" });
+      throw err
+    } else {
+      res.json({ "result": result });
+    }
+  })
+});
+app.all('/leadStatusDetails', upload.array(), function (req, res, next) {
+
+  var querystring = "SELECT COUNT(ID) as Count,STATUS FROM Edelweissdata GROUP BY STATUS";
   connection.query(querystring, function (err, result) {
     if (err) {
       res.json({ "result": "failed" });
