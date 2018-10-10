@@ -73,25 +73,25 @@ app.get('*', function (req, res) {
 
 var mysql = require('mysql')
 var connection = mysql.createConnection({
-  host: 'retrainfo.cl2xcsug0xte.ap-south-1.rds.amazonaws.com',
-  port: '3306',
-  user: 'retrauserdata',
-  password: 's3cr3tretra',
-  database: 'retrafinancedb'
+  host: '',
+  port: '',
+  user: '',
+  password: '',
+  database: ''
 });
 var nodemailer = require('nodemailer');
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'srivastavasharad179@gmail.com',
-    pass: 'bangalore@17986'
+    user: '',
+    pass: ''
   }
 });
 
 var mailOptions = {
-  from: 'srivastavasharad179@gmail.com',
-  to: 'sharad.srivastava@retrafinance.com, mansi.agrawal@retrafinance.com, subhra.datta@retrafinance.com',
+  from: '',
+  to: '',
   subject: 'New Lead Entry'
 };
 
