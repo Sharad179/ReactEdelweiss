@@ -22,6 +22,9 @@ function login(username, password) {
                     else if(user.role=="user"){
                         history.push('/home');
                     }
+                    else if(user.role == "analyst"){
+                        history.push('/analyst');
+                    }
                     else{
                         history.push('/rmpage');
                     }

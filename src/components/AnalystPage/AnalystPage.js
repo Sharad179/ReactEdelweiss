@@ -5,17 +5,13 @@ import config from 'config';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Table, ButtonToolbar, Button } from 'react-bootstrap';
-import EditModeHomePage from '../EditModeHomePage/EditModeHomePage';
 
 // import { userActions } from '../_actions';
-function clickEventId(e) {
-    localStorage.setItem('panInfo', e.target.innerHTML);
-}
 function ResultItem(props) {
     var camper = props.user;
     return (
         <tr>
-            <td><a href='/edithome' onClick={clickEventId}>{camper.PAN_CARD}</a></td>
+            <td>{camper.PAN_CARD}</td>
             <td>{camper.CONTACT_PERSON}</td>
             <td>{camper.LOAN_AMOUNT}</td>
             <td>{camper.MOBILE_NUMBER}</td>
@@ -25,7 +21,7 @@ function ResultItem(props) {
 }
 
 
-class AdminPage extends React.Component {
+class AnalystPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = { resultset: [], 'noOfApprovedCases': 0, 'noOfRejectedCases': 0, 'noOfActionPendingCases': 0, 'noOfSentCases': 0 };
@@ -105,7 +101,7 @@ class AdminPage extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12 col-lg-12 col-xs-12">
+                    <div className="col-lg-12 col-md-12 col-xs-12">
                         <div className="card card-signin my-5" style={{ backgroundColor: 'white' }}>
                             <div className="card-body">
                                 <h5 className="card-title text-center" style={{ fontWeight: 600 }}><u>Leads List</u></h5>
@@ -144,4 +140,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default withRouter(connect(mapStateToProps)(AdminPage));
+export default withRouter(connect(mapStateToProps)(AnalystPage));

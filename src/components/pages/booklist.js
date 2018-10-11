@@ -15,6 +15,7 @@ import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import EditModeHomePage from '../EditModeHomePage/EditModeHomePage';
 import RetraManagerHomePage from '../RetraManagerHomePage/RetraManagerHomePage';
+import AnalystPage from '../AnalystPage/AnalystPage';
 
 class BookList extends React.Component {
     render() {
@@ -33,6 +34,7 @@ class BookList extends React.Component {
                 <Route path="/admin" component={AdminPage} />
                 <Route path="/edithome" component={EditModeHomePage} />
                 <Route path="/rmpage" component = {RetraManagerHomePage} />
+                <Route path="/analyst" component = {AnalystPage} />
             </div>
         )
         return (
@@ -41,6 +43,7 @@ class BookList extends React.Component {
                     <PrivateRoute path="/home" component={DefaultContainer} />
                     <PrivateRoute path="/admin" component={DefaultContainer} />
                     <PrivateRoute path="/edithome" component={DefaultContainer} />
+                    <PrivateRoute path="/analyst" component={DefaultContainer} />
                     <PrivateRoute path="/rmpage" component = {DefaultContainer} />
                     <Route path="/login" component={LoginContainer} />
                 </div>
