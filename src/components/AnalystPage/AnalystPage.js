@@ -7,6 +7,10 @@ import { connect } from 'react-redux';
 import { Table, ButtonToolbar, Button } from 'react-bootstrap';
 
 // import { userActions } from '../_actions';
+function formatDateMySQL(inputdate){
+    var myDate = new Date(inputdate);
+    return ((myDate.getMonth() + 1) + '/' + myDate.getDate() + '/' + myDate.getFullYear());
+}
 function ResultItem(props) {
     var camper = props.user;
     return (
@@ -14,8 +18,21 @@ function ResultItem(props) {
             <td>{camper.PAN_CARD}</td>
             <td>{camper.CONTACT_PERSON}</td>
             <td>{camper.LOAN_AMOUNT}</td>
+            <td>{camper.COMPANY_NAME}</td>
             <td>{camper.MOBILE_NUMBER}</td>
             <td>{camper.EMAIL}</td>
+            <td>{camper.CITY}</td>
+            <td>{camper.CREATED_BY}</td>
+            <td>{formatDateMySQL(camper.ENTRY_DATE)}</td>
+            <td>{camper.NET_SALARY}</td>
+            <td>{camper.CURRENT_COMPANY_EXPERIENCE}</td>
+            <td>{camper.MODE_OF_SALARY}</td>
+            <td>{camper.OFFICE_ADDRESS}</td>
+            <td>{camper.COMPANY_NUMBER_OF_EMPLOYEES}</td>
+            <td>{formatDateMySQL(camper.APPOINTMENT_DATE)}</td>
+            <td>{camper.APPOINTMENT_TIME}</td>
+           
+            <td>{formatDateMySQL(camper.DATE_OF_BIRTH)}</td>
         </tr>
     );
 }
@@ -32,6 +49,8 @@ class AnalystPage extends React.Component {
         this.LeadsList();
         this.ListStatusDetails();
     }
+   
+    
     LeadsList() {
         var _this = this;
         var resultbody;
@@ -102,25 +121,38 @@ class AnalystPage extends React.Component {
                 </div>
                 <div className="row">
                     <div className="col-lg-12 col-md-12 col-xs-12">
-                        <div className="card card-signin my-5" style={{ backgroundColor: 'white' }}>
-                            <div className="card-body">
-                                <h5 className="card-title text-center" style={{ fontWeight: 600 }}><u>Leads List</u></h5>
+                        <div className="card card-signin my-5" style={{ backgroundColor: 'white'}}>
+                         <div className = "card-heading"> <br/><p className="card-title text-center" style={{ fontWeight: 600 }}><u>Leads List</u></p></div>
+                            <div className="card-body" style={{overflowX: "scroll"}}>
+                               
 
-                                <Table striped bordered condensed hover>
-                                    <thead style={{ whiteSpace: 'nowrap', textAlign: 'center' }}>
+                                <table className="table table-striped table-bordered table-condensed table-hover">
+                                    <thead style={{ whiteSpace: 'nowrap', textAlign: 'center',overflowX: "scroll" }}>
                                         <tr>
-                                            <th>PAN Number</th>
-                                            <th>Contact Person</th>
-                                            <th>Loan Amount</th>
-                                            <th>Mobile Number</th>
-                                            <th>Email</th>
+                                            <th>PAN NUMBER</th>
+                                            <th>CONTACT PERSON</th>
+                                            <th>LOAN AMOUNT</th>
+                                            <th>COMPANY NAME</th>
+                                            <th>MOBILE NUMBER</th>
+                                            <th>EMAIL</th>
+                                            <th>CITY</th>
+                                            <th>CREATED BY</th>
+                                            <th>ENTRY DATE</th>
+                                            <th>NET SALARY</th>
+                                            <th>CURRENT COMPANY EXPERIENCE</th>
+                                            <th>MODE OF SALARY</th>
+                                            <th>OFFICE ADDRESS</th>
+                                            <th>COMPANY NUMBER OF EMPLOYEES</th>
+                                            <th>APPOINTMENT DATE</th>
+                                            <th>APPOINTMENT TIME</th>
+                                            <th>DATE OF BIRTH</th>
 
                                         </tr>
                                     </thead>
-                                    <tbody style={{ whiteSpace: 'nowrap', textAlign: 'center' }}>
+                                    <tbody style={{ whiteSpace: 'nowrap', textAlign: 'center',overflowX: "scroll" }}>
                                         {leadslist}
                                     </tbody>
-                                </Table>
+                                </table>
 
                             </div>
                         </div>
